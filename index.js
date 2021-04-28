@@ -1,6 +1,6 @@
 require('dotenv').config();
 const fs = require('fs');
-const token = process.env.token;
+const token = process.env.discordtoken;
 const prefix = process.env.prefix;
 
 //connect to discord
@@ -38,9 +38,9 @@ client.on('message', message => {
 
 	//if command requires args and not given any handle it by returning what args it expects
 	if (command.args && !args.length) {
-		let reply = `You didn't provide any arguments, ${message.author}!`;
+		let reply = `Hold up! You need to add more info. Who you tryna match, ${message.author}?`;
 		if (command.usage) {
-			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+			reply += `\nThe proper usage would be: \n\`${prefix}${command.name} ${command.usage}\``;
 		}
 		return message.channel.send(reply);
 	}

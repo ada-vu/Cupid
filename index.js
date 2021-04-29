@@ -20,6 +20,8 @@ for (const folder of commandFolders) {
 	}
 }
 
+const arrayOfCommands = ["!match", "!flirt", "!help"];
+
 client.once('ready', () => {
 	console.log('Ready!');
 });
@@ -31,6 +33,10 @@ client.on('message', message => {
 	//parsing arguments, each word is an argument
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
+
+	if (commandName !== "match" && commandName !== "flirt" && commandName !== "help") {
+		return message.channel.send(`Uh oh ${message.author}... That seems to be the wrong command. Did you mean to type \`${arrayOfCommands[Math.floor(Math.random() * arrayOfCommands.length)]}\`?`)
+	}
 
 	if (!client.commands.has(commandName)) return;
 

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Discord = require('discord.js');
 
 const exampleEmbed = new Discord.MessageEmbed()
@@ -9,7 +10,7 @@ const exampleEmbed = new Discord.MessageEmbed()
 	.setThumbnail('attachment://cupid.png')
 	.addFields(
 		{ name: '\u200B', value: '\u200B' },
-		{ name: "Commands", value: `:heart:\ \`!match <username> <username>\` | Match your friends!\n\n :kissing_heart:\ \`!flirt <category GIF> <username>\` | Be brave and send a random categorized GIF to your crush!\n\n :question:\ \`!help\` | Gives you info on Cupid Bot` },
+		{ name: "Commands", value: `:heart:\ \`!match @username @username\` | Match your friends!\n\n :kissing_heart:\ \`!flirt <category GIF> @username\` | Be brave and send a random categorized GIF to your crush! It might be weird hehe...\n\n :question:\ \`!help\` | Gives you info on Cupid Bot` },
 		{ name: '\u200B', value: '\u200B' },
 		{ name: 'React!\ :wave:', value: 'React to the match messages how you feel about the couple being matched!', inline: true },
 		{ name: 'Cuteness Level %\ :heart_eyes:', value: 'After a few hours, Cupid Bot will send a percentage of what a great pair people think the match is!', inline: true },

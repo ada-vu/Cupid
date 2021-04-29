@@ -21,6 +21,8 @@ const exampleEmbed = new Discord.MessageEmbed()
 module.exports = {
 	name: 'help',
 	description: 'shows how to use the bot',
+	args: true,
+    usage: 'Cupid',
 	execute(message, args) {
 		message.channel.send(exampleEmbed);
 	},

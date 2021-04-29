@@ -44,7 +44,7 @@ client.on('message', message => {
 
 	//if command requires args and not given any handle it by returning what args it expects
 	if (command.args && !args.length) {
-		let reply = `Hold up! You need to add more info. Who you tryna match, ${message.author}?`;
+		let reply = `Hold up! You need to add more info, ${message.author}`;
 		if (command.usage) {
 			reply += `\nThe proper usage would be: \n\`${prefix}${command.name} ${command.usage}\``;
 		}

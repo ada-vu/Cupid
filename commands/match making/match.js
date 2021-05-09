@@ -1,5 +1,8 @@
 require('dotenv').config();
 const cuteGif = require('../../gifs/love-mocha.json')
+const Discord = require('discord.js');
+
+const reactions = new Discord.Message();
 
 module.exports = {
 	name: 'match',
@@ -22,9 +25,72 @@ module.exports = {
 
         let reply = `**Cupid ${message.author} wants to match ${args[0]} and ${args[1]}**`
         reply += `\n*Go ahead react to this messsage!* :wave:`
-		message.channel.send(reply);
+		message.channel.send(reply)
+        .then(async function(botMessage) {
+            botMessage.react('💘');
+            botMessage.react('👎');
+            botMessage.react('👍');
+            botMessage.react('🤡');
+            botMessage.react('😍');
+            botMessage.react('💔');
+            botMessage.react('🙆🏻‍♀️');
+            botMessage.react('🙅🏻‍♀️');
+            botMessage.react('👀');
+            botMessage.react('💩');
+            
+            const time = 600000;
+
+            const goodFilter = (reaction, user) => {
+                return (reaction.emoji.name === '👍' || reaction.emoji.name === '😍' || reaction.emoji.name === '💘' || reaction.emoji.name === '🙆🏻‍♀️' || reaction.emoji.name === '👀') && user.id === message.author.id;
+            };
+            const goodCollector = botMessage.createReactionCollector(goodFilter, { time: time });
+
+            const badFilter = (reaction, user) => {
+                return (reaction.emoji.name === '👎' || reaction.emoji.name === '🤡' || reaction.emoji.name === '💔' || reaction.emoji.name === '🙅🏻‍♀️' || reaction.emoji.name === '💩') && user.id === message.author.id;
+            };
+            const badCollector = botMessage.createReactionCollector(badFilter, { time: time });
+            
+            badCollector.on('collect', (reaction, user) => {
+                console.log(`Collected ${reaction.emoji.name} from ${user.tag}`);
+            });
+            
+            badCollector.on('end', collected => {
+                console.log(`Collected ${collected.size} items`);
+            });
+
+            goodCollector.on('collect', (reaction, user) => {
+                console.log(`Collected ${reaction.emoji.name} from ${user.tag}`);
+            });
+            
+            goodCollector.on('end', collected => {
+                const allReactions = botMessage.reactions.cache;
+                const goodEmojiCount = allReactions.get('💘').count + allReactions.get('👍').count + allReactions.get('😍').count + allReactions.get('🙆🏻‍♀️').count + allReactions.get('👀').count - 5;
+                const badEmojiCount = allReactions.get('👎').count + allReactions.get('🤡').count + allReactions.get('💔').count + allReactions.get('🙅🏻‍♀️').count + allReactions.get('💩').count - 5;
+        
+                console.log(goodEmojiCount)
+                const percentage = goodEmojiCount/(goodEmojiCount+badEmojiCount)*100;
+                let finalMatchReply = `**Here are the match results for ${args[0]} and ${args[1]} DRUM ROLL~**`
+                finalMatchReply += `\n\n> **${percentage}%**`;
+
+                if (percentage <= 50) {
+                    finalMatchReply += ` ... 😢\n\n*Hmm, don't lose hope. You can make it happen yourself!*`;
+                } else if (percentage <= 85) {
+                    finalMatchReply += ` \n\n*People think you're cute enough! If you guys aren't togther, maybe go for it!*`;
+                } else {
+                    finalMatchReply += ` 🎉\n\n *Wow! You better be dating soon!! 👀*`;
+                }
+        
+                message.channel.send(finalMatchReply);
+
+                console.log(`Collected ${collected.size} items`);
+            });
+
+            
+
+        });
 
         const gif = cuteGif.results[Math.floor(Math.random() * cuteGif.results.length)].url;
         message.channel.send(gif);
+        
 	}
 };

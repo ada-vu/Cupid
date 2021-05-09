@@ -23,6 +23,10 @@ module.exports = {
             } 
         }
 
+        if (args[0] === `<@!246046329388793867>` || args[1] === `<@!246046329388793867>`) {
+            return message.channel.send(`${message.author}, you can't match me up! I know I'm pretty!`);
+        }
+
         let reply = `**Cupid ${message.author} wants to match ${args[0]} and ${args[1]}**`
         reply += `\n*Go ahead react to this messsage!* :wave:`
 		message.channel.send(reply)

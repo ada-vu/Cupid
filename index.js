@@ -24,6 +24,13 @@ const arrayOfCommands = ["!match", "!flirt", "!help"];
 
 client.once('ready', () => {
 	console.log('Ready!');
+	client.user.setPresence({
+        status: "online",  //You can show online, idle....
+        activity: {
+            name: "casually matching yall up 👀",  //The message shown
+            type: "STREAMING" //PLAYING: WATCHING: LISTENING: STREAMING:
+        }
+    });
 });
 
 //inputting commands into discord 
